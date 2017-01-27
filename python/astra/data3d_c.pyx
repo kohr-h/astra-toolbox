@@ -51,6 +51,7 @@ import operator
 
 from six.moves import reduce
 
+include "config.pxi"
 
 cdef extern from "Python.h":
     void* PyLong_AsVoidPtr(object)
@@ -91,9 +92,12 @@ def create(datatype,geometry,data=None, link=False):
             raise Exception('Geometry class not initialized.')
         if link:
             if isinstance(data, GPULink):
-                s = geom_size(geometry)
-                hnd = wrapHandle(<float*>PyLong_AsVoidPtr(data.ptr), data.x, data.y, data.z, data.pitch/4)
-                pDataObject3D = <CFloat32Data3D * > new CFloat32VolumeData3DGPU(pGeometry, hnd)
+                IF HAVE_CUDA==True:
+                    s = geom_size(geometry)
+                    hnd = wrapHandle(<float*>PyLong_AsVoidPtr(data.ptr), data.x, data.y, data.z, data.pitch/4)
+                    pDataObject3D = <CFloat32Data3D * > new CFloat32VolumeData3DGPU(pGeometry, hnd)
+                ELSE:
+                    raise NotImplementedError("CUDA support is not enabled in ASTRA")
             else:
                 pCustom = <CFloat32CustomMemory*> new CFloat32CustomPython(data)
                 pDataObject3D = <CFloat32Data3D * > new CFloat32VolumeData3DMemory(pGeometry, pCustom)
@@ -121,9 +125,12 @@ def create(datatype,geometry,data=None, link=False):
             raise Exception('Geometry class not initialized.')
         if link:
             if isinstance(data, GPULink):
-                s = geom_size(geometry)
-                hnd = wrapHandle(<float*>PyLong_AsVoidPtr(data.ptr), data.x, data.y, data.z, data.pitch/4)
-                pDataObject3D = <CFloat32Data3D * > new CFloat32ProjectionData3DGPU(ppGeometry, hnd)
+                IF HAVE_CUDA==True:
+                    s = geom_size(geometry)
+                    hnd = wrapHandle(<float*>PyLong_AsVoidPtr(data.ptr), data.x, data.y, data.z, data.pitch/4)
+                    pDataObject3D = <CFloat32Data3D * > new CFloat32ProjectionData3DGPU(ppGeometry, hnd)
+                ELSE:
+                    raise NotImplementedError("CUDA support is not enabled in ASTRA")
             else:
                 pCustom = <CFloat32CustomMemory*> new CFloat32CustomPython(data)
                 pDataObject3D = <CFloat32Data3D * > new CFloat32ProjectionData3DMemory(ppGeometry, pCustom)
