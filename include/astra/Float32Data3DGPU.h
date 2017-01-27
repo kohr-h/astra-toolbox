@@ -105,4 +105,4 @@ public:
 
 #endif
 
-#endif // _INC_ASTRA_FLOAT32DATA2D
+#endif // _INC_ASTRA_FLOAT32DATA3DGPU
