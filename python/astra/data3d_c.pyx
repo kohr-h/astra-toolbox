@@ -73,7 +73,8 @@ def create(datatype,geometry,data=None, link=False):
     cdef CFloat32Data3D * pDataObject3D
     cdef CConeProjectionGeometry3D* pppGeometry
     cdef CFloat32CustomMemory * pCustom = NULL
-    cdef MemHandle3D hnd
+    IF HAVE_CUDA==True:
+        cdef MemHandle3D hnd
 
     if link:
         if isinstance(data, GPULink):
