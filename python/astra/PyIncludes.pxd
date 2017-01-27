@@ -189,7 +189,7 @@ cdef extern from "astra/Float32Data3DGPU.h" namespace "astraCUDA3d":
 		pass
 
 
-cdef extern from "astra/Float32Data3DGPU.h" namespace "astra":
+cdef extern from "astra/Float32Data3DGPU.h" namespace "astraCUDA3d":
 	cdef MemHandle3D wrapHandle(float *D_ptr, unsigned int x, unsigned int y, unsigned int z, unsigned int pitch)
 
 cdef extern from "astra/Float32Data3D.h" namespace "astra":
