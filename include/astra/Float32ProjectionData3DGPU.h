@@ -33,6 +33,8 @@ $Id$
 #include "ProjectionGeometry3D.h"
 #include "Float32ProjectionData3D.h"
 
+#ifdef ASTRA_CUDA
+
 namespace astra {
 
 /**
@@ -84,5 +86,7 @@ public:
 };
 
 } // end namesProjection astra
+
+#endif
 
 #endif // _INC_ASTRA_FLOAT32PROJECTIONDATA3DGPU

@@ -33,6 +33,8 @@ $Id$
 #include "VolumeGeometry3D.h"
 #include "Float32VolumeData3D.h"
 
+#ifdef ASTRA_CUDA
+
 namespace astra {
 
 /**
@@ -84,5 +86,7 @@ public:
 };
 
 } // end namespace astra
+
+#endif
 
 #endif // _INC_ASTRA_FLOAT32VOLUMEDATA3DGPU
